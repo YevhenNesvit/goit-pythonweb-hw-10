@@ -14,5 +14,5 @@ class Contact(Base):
     birthday = Column(Date)
     additional_info = Column(String, nullable=True)
     user_id = Column(Integer, ForeignKey("users.id"))  # Додано зв'язок з користувачем
-    
+
     user = relationship("User", back_populates="contacts")

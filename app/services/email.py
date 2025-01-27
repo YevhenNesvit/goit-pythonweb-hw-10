@@ -17,20 +17,19 @@ conf = ConnectionConfig(
     MAIL_STARTTLS=False,
     MAIL_SSL_TLS=True,
     USE_CREDENTIALS=True,
-    TEMPLATE_FOLDER=template_path  # Додаємо шлях до шаблонів
+    TEMPLATE_FOLDER=template_path,  # Додаємо шлях до шаблонів
 )
+
 
 async def send_verification_email(email: str, token: str):
     verification_url = f"http://localhost:8000/auth/verify/{token}"
-    
+
     message = MessageSchema(
         subject="Verify your email",
         recipients=[email],
-        template_body={
-            "verification_url": verification_url
-        },
-        subtype="html"
+        template_body={"verification_url": verification_url},
+        subtype="html",
     )
-    
+
     fm = FastMail(conf)
     await fm.send_message(message, template_name="verification.html")

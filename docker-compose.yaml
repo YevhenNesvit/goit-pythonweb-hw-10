@@ -21,5 +21,13 @@ services:
     ports:
       - "5432:5432"
 
+  alembic:
+    build: .
+    command: alembic upgrade head
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+      
 volumes:
   postgres_data:

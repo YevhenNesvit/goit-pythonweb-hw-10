@@ -4,6 +4,7 @@ from app.schemas.contact import ContactCreate
 from fastapi import HTTPException
 from app.models.user import User
 
+
 class ContactService:
     def __init__(self):
         self.repo = ContactRepository()
@@ -19,10 +20,14 @@ class ContactService:
         if not contact:
             raise HTTPException(status_code=404, detail="Contact not found")
         if contact.user_id != current_user.id:
-            raise HTTPException(status_code=403, detail="Not authorized to access this contact")
+            raise HTTPException(
+                status_code=403, detail="Not authorized to access this contact"
+            )
         return contact
 
-    def update_contact(self, db: Session, contact_id: int, contact: ContactCreate, current_user: User):
+    def update_contact(
+        self, db: Session, contact_id: int, contact: ContactCreate, current_user: User
+    ):
         db_contact = self.get_contact_by_id(db, contact_id, current_user)
         return self.repo.update(db, contact_id, contact)
 

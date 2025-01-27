@@ -3,6 +3,7 @@ from app.models.contact import Contact
 from app.schemas.contact import ContactCreate
 from app.models.user import User
 
+
 class ContactRepository:
     def create(self, db: Session, contact: ContactCreate, user: User):
         contact_data = contact.model_dump()
